@@ -6,10 +6,10 @@ namespace JSON_Generator
     public class JsonGenerator
     {
         // 자동화를 할 엑셀 파일들이 있는 디렉토리 경로 / The directory where excel files exist.
-        public static string directoryPath = "C:\\Users\\KYMPY\\Desktop\\UnityProject\\Project_G\\ExcelData\\";
+        public static string directoryPath = "C:\\Users\\UserName\\Desktop\\UnityProject\\Project_G\\ExcelData\\";
         // 저장 경로 / Save path where the file saved.
-        public static string savePath_Json = "C:\\Users\\KYMPY\\Desktop\\UnityProject\\Project_G\\Assets\\Table\\";
-        public static string savePath_Script = "C:\\Users\\KYMPY\\Desktop\\UnityProject\\Project_G\\Assets\\Scripts\\DataTable\\";
+        public static string savePath_Json = "C:\\Users\\UserName\\Desktop\\UnityProject\\Project_G\\Assets\\Table\\";
+        public static string savePath_Script = "C:\\Users\\UserName\\Desktop\\UnityProject\\Project_G\\Assets\\Scripts\\DataTable\\";
         public const string excelType = "xlsx";
         public static Application app;
         public static Workbook workbook;
