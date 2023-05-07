@@ -189,6 +189,7 @@
             this.classFolderFindButton.TabIndex = 15;
             this.classFolderFindButton.Text = "폴더 선택";
             this.classFolderFindButton.UseVisualStyleBackColor = true;
+            this.classFolderFindButton.Click += new System.EventHandler(this.classFolderFindButton_Click);
             // 
             // classPathBox
             // 

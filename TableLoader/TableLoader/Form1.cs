@@ -26,34 +26,34 @@ namespace TableLoader
         {
             
         }
-        private const string COMPANYNAME = "DragonGate";
+        private const string TrunkName = "Trunk";
         private void FindFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog fb = new FolderBrowserDialog();
             if (fb.ShowDialog() == DialogResult.OK)
             {
                 pathBox.Text = fb.SelectedPath;
-                int index = fb.SelectedPath.IndexOf(COMPANYNAME);
+                int index = fb.SelectedPath.IndexOf(TrunkName);
                 if (index >= 0)
                 {
-                    string subPath = fb.SelectedPath.Substring(0, index + CompanyName.Length);
+                    string subPath = fb.SelectedPath.Substring(0, index + TrunkName.Length);
                     savePathBox.Text = subPath;
-                    savePathBox.Text += "Client\\Assets\\Resources_moved\\Table";
+                    savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                     classPathBox.Text = subPath;
-                    classPathBox.Text += "Client\\Assets\\Scripts\\Table";
+                    classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
                 }
             }
         }
         private void pathBox_TextChanged(object sender, EventArgs e)
         {
-            int index = pathBox.Text.IndexOf(COMPANYNAME);
+            int index = pathBox.Text.IndexOf(TrunkName);
             if (index >= 0)
             {
-                string subPath = pathBox.Text.Substring(0, index + CompanyName.Length);
+                string subPath = pathBox.Text.Substring(0, index + TrunkName.Length);
                 savePathBox.Text = subPath;
-                savePathBox.Text += "Client\\Assets\\Resources_moved\\Table";
+                savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                 classPathBox.Text = subPath;
-                classPathBox.Text += "Client\\Assets\\Scripts\\Table";
+                classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
             }
         }
         private void fileFindButton_Click(object sender, EventArgs e)
@@ -67,27 +67,27 @@ namespace TableLoader
             if (dr == DialogResult.OK)
             {
                 fileTextBox.Text = of.FileName;
-                int index = fileTextBox.Text.IndexOf(COMPANYNAME);
+                int index = fileTextBox.Text.IndexOf(TrunkName);
                 if (index >= 0)
                 {
-                    string subPath = fileTextBox.Text.Substring(0, index + CompanyName.Length);
+                    string subPath = fileTextBox.Text.Substring(0, index + TrunkName.Length);
                     savePathBox.Text = subPath;
-                    savePathBox.Text += "Client\\Assets\\Resources_moved\\Table";
+                    savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                     classPathBox.Text = subPath;
-                    classPathBox.Text += "Client\\Assets\\Scripts\\Table";
+                    classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
                 }
             }
         }
         private void fileTextBox_TextChanged(object sender, EventArgs e)
         {
-            int index = fileTextBox.Text.IndexOf(COMPANYNAME);
+            int index = fileTextBox.Text.IndexOf(TrunkName);
             if (index >= 0)
             {
-                string subPath = fileTextBox.Text.Substring(0, index + CompanyName.Length);
+                string subPath = fileTextBox.Text.Substring(0, index + TrunkName.Length);
                 savePathBox.Text = subPath;
-                savePathBox.Text += "Client\\Assets\\Resources_moved\\Table";
+                savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                 classPathBox.Text = subPath;
-                classPathBox.Text += "Client\\Assets\\Scripts\\Table";
+                classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
             }
         }
         private void SetSavePathButton_Click(object sender, EventArgs e)
@@ -420,6 +420,15 @@ namespace TableLoader
             else
             {
                 Log("잘못된 경로입니다.\n");
+            }
+        }
+
+        private void classFolderFindButton_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fb = new FolderBrowserDialog();
+            if (fb.ShowDialog() == DialogResult.OK)
+            {
+                classPathBox.Text = fb.SelectedPath;
             }
         }
     }
