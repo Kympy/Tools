@@ -1,21 +1,30 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
-
+using UnityEngine;
+using UnityEditor;
 namespace JSON_Generator
 {
     public class JsonGenerator
     {
         // 자동화를 할 엑셀 파일들이 있는 디렉토리 경로 / The directory where excel files exist.
-        public static string directoryPath = "C:\\Users\\UserName\\Desktop\\UnityProject\\Project_G\\ExcelData\\";
+        public static string directoryPath;
         // 저장 경로 / Save path where the file saved.
-        public static string savePath_Json = "C:\\Users\\UserName\\Desktop\\UnityProject\\Project_G\\Assets\\Table\\";
-        public static string savePath_Script = "C:\\Users\\UserName\\Desktop\\UnityProject\\Project_G\\Assets\\Scripts\\DataTable\\";
+        public static string savePath_Json;
+        public static string savePath_Script;
         public const string excelType = "xlsx";
-        public static Application app;
+        public static Microsoft.Office.Interop.Excel.Application app;
         public static Workbook workbook;
         public static Worksheet worksheet;
-        public static void Main()
+        private static void Main(string[] argPath)
         {
+            if (argPath.Length != 3)
+            {
+                Console.WriteLine("Argument is not valid.");
+                return;
+            }
+            directoryPath = argPath[0];
+            savePath_Json = argPath[1];
+            savePath_Script = argPath[2];
             try
             {
                 if (Directory.Exists(directoryPath) == false)
@@ -82,7 +91,7 @@ namespace JSON_Generator
             }
             finally
             {
-                if(worksheet != null)
+                if (worksheet != null)
                 {
                     Marshal.ReleaseComObject(worksheet);
                 }
@@ -100,7 +109,7 @@ namespace JSON_Generator
 
         private static void MakeJson(string path)
         {
-            app = new Application();
+            app = new Microsoft.Office.Interop.Excel.Application();
             workbook = app.Workbooks.Open(path);
             worksheet = workbook.Worksheets.Item[1];
             Microsoft.Office.Interop.Excel.Range range = worksheet.UsedRange;
@@ -109,6 +118,7 @@ namespace JSON_Generator
             string[,] datas = new string[range.Rows.Count - 2, range.Columns.Count];
             // Get name / type cells
             Console.WriteLine("Get name and types...");
+            Debug.Log("Get name and types...");
             for (int column = 1; column <= range.Columns.Count; column++)
             {
                 names[column - 1] = (string)(range.Cells[1, column]).Text;
