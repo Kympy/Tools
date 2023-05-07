@@ -24,19 +24,25 @@ namespace TableLoader
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            pivotPathBox.Text = pivotFolderName;
+
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\lastConfig") == false) return;
+
+            StreamReader sr = new StreamReader(Directory.GetCurrentDirectory() + "\\lastConfig");
+            pathBox.Text = sr.ReadLine();
+            sr.Close();
         }
-        private const string TrunkName = "Trunk";
+        private string pivotFolderName = "Trunk";
         private void FindFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog fb = new FolderBrowserDialog();
             if (fb.ShowDialog() == DialogResult.OK)
             {
                 pathBox.Text = fb.SelectedPath;
-                int index = fb.SelectedPath.IndexOf(TrunkName);
+                int index = fb.SelectedPath.IndexOf(pivotFolderName);
                 if (index >= 0)
                 {
-                    string subPath = fb.SelectedPath.Substring(0, index + TrunkName.Length);
+                    string subPath = fb.SelectedPath.Substring(0, index + pivotFolderName.Length);
                     savePathBox.Text = subPath;
                     savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                     classPathBox.Text = subPath;
@@ -46,10 +52,10 @@ namespace TableLoader
         }
         private void pathBox_TextChanged(object sender, EventArgs e)
         {
-            int index = pathBox.Text.IndexOf(TrunkName);
+            int index = pathBox.Text.IndexOf(pivotFolderName);
             if (index >= 0)
             {
-                string subPath = pathBox.Text.Substring(0, index + TrunkName.Length);
+                string subPath = pathBox.Text.Substring(0, index + pivotFolderName.Length);
                 savePathBox.Text = subPath;
                 savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                 classPathBox.Text = subPath;
@@ -67,10 +73,10 @@ namespace TableLoader
             if (dr == DialogResult.OK)
             {
                 fileTextBox.Text = of.FileName;
-                int index = fileTextBox.Text.IndexOf(TrunkName);
+                int index = fileTextBox.Text.IndexOf(pivotFolderName);
                 if (index >= 0)
                 {
-                    string subPath = fileTextBox.Text.Substring(0, index + TrunkName.Length);
+                    string subPath = fileTextBox.Text.Substring(0, index + pivotFolderName.Length);
                     savePathBox.Text = subPath;
                     savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                     classPathBox.Text = subPath;
@@ -80,10 +86,10 @@ namespace TableLoader
         }
         private void fileTextBox_TextChanged(object sender, EventArgs e)
         {
-            int index = fileTextBox.Text.IndexOf(TrunkName);
+            int index = fileTextBox.Text.IndexOf(pivotFolderName);
             if (index >= 0)
             {
-                string subPath = fileTextBox.Text.Substring(0, index + TrunkName.Length);
+                string subPath = fileTextBox.Text.Substring(0, index + pivotFolderName.Length);
                 savePathBox.Text = subPath;
                 savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
                 classPathBox.Text = subPath;
@@ -385,6 +391,15 @@ namespace TableLoader
                 writer.WriteLine($"public class {fileName[0]}Data : TableBase<{fileName[0]}> {{ }}");
                 writer.Close();
                 Log("C# 클래스 저장 완료.\n");
+
+                // 로컬 마지막 경로 저장
+                StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\lastConfig");
+                if (sw == null) return true;
+
+                if (string.IsNullOrEmpty(pathBox.Text) == false)
+                    sw.WriteLine(pathBox.Text);
+
+                sw.Close();
                 return true;
             }
             catch(Exception ex)
@@ -430,6 +445,17 @@ namespace TableLoader
             {
                 classPathBox.Text = fb.SelectedPath;
             }
+        }
+
+        private void pivotApply_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(pivotPathBox.Text) == true)
+            {
+                pivotFolderName = "Trunk";
+                pivotPathBox.Text = pivotFolderName;
+                return;
+            }
+            pivotFolderName = pivotPathBox.Text;
         }
     }
 }

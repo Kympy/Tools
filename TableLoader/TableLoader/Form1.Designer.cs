@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.excelPathLabel = new System.Windows.Forms.Label();
             this.pathBox = new System.Windows.Forms.TextBox();
             this.findButton = new System.Windows.Forms.Button();
@@ -46,6 +47,9 @@
             this.classSavePath = new System.Windows.Forms.Label();
             this.OpenJsonButton = new System.Windows.Forms.Button();
             this.OpenClassButton = new System.Windows.Forms.Button();
+            this.pivotFolderLabel = new System.Windows.Forms.Label();
+            this.pivotPathBox = new System.Windows.Forms.TextBox();
+            this.pivotApply = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // excelPathLabel
@@ -60,6 +64,8 @@
             // 
             // pathBox
             // 
+            this.pathBox.BackColor = System.Drawing.Color.MistyRose;
+            this.pathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pathBox.Location = new System.Drawing.Point(21, 56);
             this.pathBox.Multiline = true;
             this.pathBox.Name = "pathBox";
@@ -69,6 +75,10 @@
             // 
             // findButton
             // 
+            this.findButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.findButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.findButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.findButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.findButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.findButton.Location = new System.Drawing.Point(438, 56);
             this.findButton.Name = "findButton";
@@ -90,6 +100,10 @@
             // 
             // GenerateAllButton
             // 
+            this.GenerateAllButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.GenerateAllButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.GenerateAllButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.GenerateAllButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GenerateAllButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GenerateAllButton.Location = new System.Drawing.Point(438, 99);
             this.GenerateAllButton.Name = "GenerateAllButton";
@@ -101,6 +115,8 @@
             // 
             // fileTextBox
             // 
+            this.fileTextBox.BackColor = System.Drawing.Color.PeachPuff;
+            this.fileTextBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileTextBox.Location = new System.Drawing.Point(21, 193);
             this.fileTextBox.Multiline = true;
             this.fileTextBox.Name = "fileTextBox";
@@ -110,6 +126,10 @@
             // 
             // GenerateFileButton
             // 
+            this.GenerateFileButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.GenerateFileButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.GenerateFileButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.GenerateFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.GenerateFileButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.GenerateFileButton.Location = new System.Drawing.Point(438, 236);
             this.GenerateFileButton.Name = "GenerateFileButton";
@@ -121,6 +141,10 @@
             // 
             // fileFindButton
             // 
+            this.fileFindButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.fileFindButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.fileFindButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.fileFindButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.fileFindButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileFindButton.Location = new System.Drawing.Point(438, 193);
             this.fileFindButton.Name = "fileFindButton";
@@ -142,6 +166,8 @@
             // 
             // savePathBox
             // 
+            this.savePathBox.BackColor = System.Drawing.Color.OldLace;
+            this.savePathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.savePathBox.Location = new System.Drawing.Point(21, 334);
             this.savePathBox.Multiline = true;
             this.savePathBox.Name = "savePathBox";
@@ -150,6 +176,10 @@
             // 
             // SetSavePathButton
             // 
+            this.SetSavePathButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.SetSavePathButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.SetSavePathButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.SetSavePathButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SetSavePathButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SetSavePathButton.Location = new System.Drawing.Point(438, 334);
             this.SetSavePathButton.Name = "SetSavePathButton";
@@ -161,12 +191,13 @@
             // 
             // logBox
             // 
-            this.logBox.Font = new System.Drawing.Font("Cascadia Code", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logBox.BackColor = System.Drawing.Color.LavenderBlush;
+            this.logBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.logBox.Location = new System.Drawing.Point(590, 56);
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
             this.logBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logBox.Size = new System.Drawing.Size(470, 484);
+            this.logBox.Size = new System.Drawing.Size(470, 442);
             this.logBox.TabIndex = 11;
             this.logBox.Text = "";
             // 
@@ -182,6 +213,10 @@
             // 
             // classFolderFindButton
             // 
+            this.classFolderFindButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.classFolderFindButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.classFolderFindButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.classFolderFindButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.classFolderFindButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.classFolderFindButton.Location = new System.Drawing.Point(438, 462);
             this.classFolderFindButton.Name = "classFolderFindButton";
@@ -193,6 +228,8 @@
             // 
             // classPathBox
             // 
+            this.classPathBox.BackColor = System.Drawing.Color.LemonChiffon;
+            this.classPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.classPathBox.Location = new System.Drawing.Point(21, 462);
             this.classPathBox.Multiline = true;
             this.classPathBox.Name = "classPathBox";
@@ -211,6 +248,10 @@
             // 
             // OpenJsonButton
             // 
+            this.OpenJsonButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.OpenJsonButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.OpenJsonButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.OpenJsonButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OpenJsonButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OpenJsonButton.Location = new System.Drawing.Point(438, 376);
             this.OpenJsonButton.Name = "OpenJsonButton";
@@ -222,6 +263,10 @@
             // 
             // OpenClassButton
             // 
+            this.OpenClassButton.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.OpenClassButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.OpenClassButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.OpenClassButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OpenClassButton.Font = new System.Drawing.Font("Cascadia Code", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OpenClassButton.Location = new System.Drawing.Point(438, 504);
             this.OpenClassButton.Name = "OpenClassButton";
@@ -231,12 +276,51 @@
             this.OpenClassButton.UseVisualStyleBackColor = true;
             this.OpenClassButton.Click += new System.EventHandler(this.OpenClassButton_Click);
             // 
+            // pivotFolderLabel
+            // 
+            this.pivotFolderLabel.AutoSize = true;
+            this.pivotFolderLabel.Font = new System.Drawing.Font("Cascadia Code", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pivotFolderLabel.Location = new System.Drawing.Point(584, 504);
+            this.pivotFolderLabel.Name = "pivotFolderLabel";
+            this.pivotFolderLabel.Size = new System.Drawing.Size(110, 33);
+            this.pivotFolderLabel.TabIndex = 18;
+            this.pivotFolderLabel.Text = "기준 폴더";
+            // 
+            // pivotPathBox
+            // 
+            this.pivotPathBox.BackColor = System.Drawing.Color.AliceBlue;
+            this.pivotPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pivotPathBox.Location = new System.Drawing.Point(700, 504);
+            this.pivotPathBox.Multiline = true;
+            this.pivotPathBox.Name = "pivotPathBox";
+            this.pivotPathBox.Size = new System.Drawing.Size(243, 33);
+            this.pivotPathBox.TabIndex = 19;
+            this.pivotPathBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // pivotApply
+            // 
+            this.pivotApply.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+            this.pivotApply.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+            this.pivotApply.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+            this.pivotApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pivotApply.Font = new System.Drawing.Font("Cascadia Code", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pivotApply.Location = new System.Drawing.Point(949, 504);
+            this.pivotApply.Name = "pivotApply";
+            this.pivotApply.Size = new System.Drawing.Size(111, 33);
+            this.pivotApply.TabIndex = 20;
+            this.pivotApply.Text = "적용";
+            this.pivotApply.UseVisualStyleBackColor = true;
+            this.pivotApply.Click += new System.EventHandler(this.pivotApply_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1082, 561);
+            this.Controls.Add(this.pivotApply);
+            this.Controls.Add(this.pivotPathBox);
+            this.Controls.Add(this.pivotFolderLabel);
             this.Controls.Add(this.OpenClassButton);
             this.Controls.Add(this.OpenJsonButton);
             this.Controls.Add(this.classFolderFindButton);
@@ -256,6 +340,7 @@
             this.Controls.Add(this.pathBox);
             this.Controls.Add(this.excelPathLabel);
             this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Table Generator v1.0 DragonGate";
@@ -285,6 +370,9 @@
         private System.Windows.Forms.Label classSavePath;
         private System.Windows.Forms.Button OpenJsonButton;
         private System.Windows.Forms.Button OpenClassButton;
+        private System.Windows.Forms.Label pivotFolderLabel;
+        private System.Windows.Forms.TextBox pivotPathBox;
+        private System.Windows.Forms.Button pivotApply;
     }
 }
 
