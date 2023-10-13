@@ -32,36 +32,40 @@ namespace TableLoader
             pathBox.Text = sr.ReadLine();
             sr.Close();
         }
-        private string pivotFolderName = "Trunk";
+        private string pivotFolderName = "";
         private void FindFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog fb = new FolderBrowserDialog();
             if (fb.ShowDialog() == DialogResult.OK)
             {
                 pathBox.Text = fb.SelectedPath;
-                int index = fb.SelectedPath.IndexOf(pivotFolderName);
-                if (index >= 0)
+                if (string.IsNullOrEmpty(pivotFolderName) == true)
                 {
-                    string subPath = fb.SelectedPath.Substring(0, index + pivotFolderName.Length);
-                    savePathBox.Text = subPath;
-                    savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
-                    classPathBox.Text = subPath;
-                    classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
+                    savePathBox.Text = $"{pathBox.Text}\\Generated";
+                    classPathBox.Text = savePathBox.Text;
                 }
+                else
+                {
+					savePathBox.Text = $"{pivotFolderName}\\Generated";
+					classPathBox.Text = savePathBox.Text;
+				}
             }
         }
         private void pathBox_TextChanged(object sender, EventArgs e)
         {
-            int index = pathBox.Text.IndexOf(pivotFolderName);
-            if (index >= 0)
-            {
-                string subPath = pathBox.Text.Substring(0, index + pivotFolderName.Length);
-                savePathBox.Text = subPath;
-                savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
-                classPathBox.Text = subPath;
-                classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
-            }
-        }
+            if (string.IsNullOrEmpty(pathBox.Text) == true) return;
+
+			if (string.IsNullOrEmpty(pivotFolderName) == true)
+			{
+				savePathBox.Text = $"{pathBox.Text}\\Generated";
+				classPathBox.Text = savePathBox.Text;
+			}
+			else
+			{
+				savePathBox.Text = $"{pivotFolderName}\\Generated";
+				classPathBox.Text = savePathBox.Text;
+			}
+		}
         private void fileFindButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog of = new OpenFileDialog();
@@ -73,29 +77,54 @@ namespace TableLoader
             if (dr == DialogResult.OK)
             {
                 fileTextBox.Text = of.FileName;
-                int index = fileTextBox.Text.IndexOf(pivotFolderName);
-                if (index >= 0)
+
+				if (string.IsNullOrEmpty(fileTextBox.Text) == false) return;
+				if (fileTextBox.Text.Contains(".xlsx") == false) return;
+
+				int fileNameStartIndex = fileTextBox.Text.IndexOf(of.SafeFileName);
+                if (string.IsNullOrEmpty(pivotFolderName) == true)
                 {
-                    string subPath = fileTextBox.Text.Substring(0, index + pivotFolderName.Length);
-                    savePathBox.Text = subPath;
-                    savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
-                    classPathBox.Text = subPath;
-                    classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
-                }
-            }
+                    savePathBox.Text = fileTextBox.Text.Substring(0, fileNameStartIndex);
+                    savePathBox.Text += "Generated";
+                    classPathBox.Text = savePathBox.Text;
+				}
+				else
+				{
+					savePathBox.Text = $"{pivotFolderName}\\Generated";
+					classPathBox.Text = savePathBox.Text;
+				}
+			}
         }
         private void fileTextBox_TextChanged(object sender, EventArgs e)
         {
-            int index = fileTextBox.Text.IndexOf(pivotFolderName);
-            if (index >= 0)
-            {
-                string subPath = fileTextBox.Text.Substring(0, index + pivotFolderName.Length);
-                savePathBox.Text = subPath;
-                savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
-                classPathBox.Text = subPath;
-                classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
-            }
-        }
+            if (string.IsNullOrEmpty(fileTextBox.Text) == false) return;
+            if (fileTextBox.Text.Contains(".xlsx") == false) return;
+
+            string[] temp = fileTextBox.Text.Split('\\');
+            string fileName = temp[temp.Length - 1];
+
+			int fileNameStartIndex = fileTextBox.Text.IndexOf(fileName);
+			if (string.IsNullOrEmpty(pivotFolderName) == true)
+			{
+				savePathBox.Text = fileTextBox.Text.Substring(0, fileNameStartIndex);
+				savePathBox.Text += "Generated";
+				classPathBox.Text = savePathBox.Text;
+			}
+			else
+			{
+				savePathBox.Text = $"{pivotFolderName}\\Generated";
+				classPathBox.Text = savePathBox.Text;
+			}
+			//int index = fileTextBox.Text.IndexOf(pivotFolderName);
+			//         if (index >= 0)
+			//         {
+			//             string subPath = fileTextBox.Text.Substring(0, index);
+			//             savePathBox.Text = subPath;
+			//             savePathBox.Text += "\\Client\\Assets\\Resources_moved\\Table";
+			//             classPathBox.Text = subPath;
+			//             classPathBox.Text += "\\Client\\Assets\\Scripts\\Table";
+			//         }
+		}
         private void SetSavePathButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fb = new FolderBrowserDialog();
@@ -229,7 +258,7 @@ namespace TableLoader
             }
         }
         private int StartCol = 1;
-        private int StartRow = 3;
+        private int StartRow = 1;
         private bool Make(string argFilePath)
         {
             try
@@ -237,35 +266,66 @@ namespace TableLoader
                 app = new Microsoft.Office.Interop.Excel.Application();
                 workbook = app.Workbooks.Open(argFilePath);
                 worksheet = workbook.Worksheets.Item[1] as Worksheet;
-                Microsoft.Office.Interop.Excel.Range range = worksheet.UsedRange;
+                //Microsoft.Office.Interop.Excel.Range range = worksheet.UsedRange;
 
-                if (range.Cells[StartRow, StartCol] == null || (range.Cells[StartRow, StartCol] as Range).Value2 == null)
-                {
-                    Log("시작 셀(3, 1) 이 비어 있습니다.\n");
-                    return false;
-                }
-                Log($"행 갯수 : {range.Rows.Count}, ");
-                Log($"열 갯수 : {range.Columns.Count}\n");
-                string[] names = new string[range.Columns.Count];
-                string[] types = new string[range.Columns.Count];
-                string[,] datas = new string[range.Rows.Count - 2, range.Columns.Count];
+                StartRow = (worksheet.Cells[1, "A"] as Range).get_End(XlDirection.xlDown).Row;
+                StartCol = 1;
+
+                int EndRow = (worksheet.Cells[StartRow, "A"] as Range).get_End(XlDirection.xlDown).Row;
+                int EndCol = (worksheet.Cells[StartRow, "A"] as Range).get_End(XlDirection.xlToRight).Column;
+
+				Log($"시작/마지막 행 : {StartRow}/{EndRow}\n");
+				Log($"시작/마지막 열 : {StartCol}/{EndCol}\n");
+				//if (range.Cells[StartRow, StartCol] == null || (range.Cells[StartRow, StartCol] as Range).Value2 == null)
+				//            {
+				//                Log("시작 셀(A3) 이 비어 있습니다.\n");
+				//                return false;
+				//            }
+				int rowCount = EndRow - StartRow + 1;
+                int colCount = EndCol;
+
+				Log($"행 갯수 : {rowCount}, ");
+                Log($"열 갯수 : {colCount}\n");
+
+                string[] names = new string[colCount];
+                string[] types = new string[colCount];
+                string[,] datas = new string[rowCount - 2, colCount];
                 // Get name / type cells
                 Log("데이터 타입과 이름을 가져오는 중...\n");
-                for (int column = StartCol; column <= range.Columns.Count; column++)
+                for (int i = StartCol; i <= colCount; i++)
                 {
-                    types[column - StartCol] = (range.Cells[StartRow, column] as Range).Value2.ToString();
-                    Log($"{types[column - StartCol]} : ");
-                    names[column - StartCol] = (range.Cells[StartRow + 1, column] as Range).Value2.ToString();
-                    Log($"{names[column - StartCol]}\n");
+                    object type = (worksheet.Cells[StartRow, i] as Range).Value2;
+                    if (type == null || type?.ToString() == " ")
+                    {
+                        types[i - StartCol] = "";
+                        Log($"타입 읽기 에러 : 테이블을 확인하세요. 셀 [{StartRow},{i}]");
+                    }
+                    else
+                    {
+					    types[i - StartCol] = type.ToString();
+                    }
+                    Log($"{types[i - StartCol]} : ");
+
+                    object name = (worksheet.Cells[StartRow + 1, i] as Range).Value2;
+                    if (name == null || name?.ToString() == " ")
+                    {
+						names[i - StartCol] = "";
+						Log($"이름 읽기 에러 : 테이블을 확인하세요. 셀 [{StartRow + 1},{i}]");
+					}
+                    else
+                    {
+					    names[i - StartCol] = name.ToString();
+                    }
+                    Log($"{names[i - StartCol]}\n");
                 }
                 // Get data cells
                 Log("데이터 읽는 중...\n");
-                for (int column = StartCol; column <= range.Columns.Count; column++)
+                for (int i = StartCol; i <= EndCol; i++)
                 {
-                    for (int row = StartRow + 2; row <= range.Rows.Count; row++)
+                    for (int j = StartRow + 2; j <= EndRow; j++)
                     {
-                        Log($"{(range.Cells[row, column] as Range).Value2}\n");
-                        datas[row - (StartRow + 2), column - (StartCol)] = (range.Cells[row, column] as Range).Value2.ToString();
+                        Log($"{(worksheet.Cells[j, i] as Range).Value2}\n");
+                        datas[j - (StartRow + 2), i - (StartCol)] = (worksheet.Cells[j, i] as Range).Value2.ToString();
                     }
                 }
                 Log("데이터 읽기 완료.\n");
@@ -294,7 +354,7 @@ namespace TableLoader
                 }
                 bool isArray = false;
                 writer.WriteLine("[");
-                for (int j = 0; j < datas.GetLength(0) - 2; j++) // From 0 to row count
+                for (int j = 0; j < datas.GetLength(0); j++) // From 0 to row count
                 {
                     writer.WriteLine("\t{");
                     for (int i = 0; i < names.Length; i++)
@@ -356,7 +416,7 @@ namespace TableLoader
                         }
                     }
                     // If last, don't write comma
-                    if (j == datas.GetLength(0) - 2 - 1)
+                    if (j == datas.GetLength(0) - 1)
                     {
                         writer.WriteLine("\t}");
                     }
@@ -392,14 +452,6 @@ namespace TableLoader
                 writer.Close();
                 Log("C# 클래스 저장 완료.\n");
 
-                // 로컬 마지막 경로 저장
-                StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\lastConfig");
-                if (sw == null) return true;
-
-                if (string.IsNullOrEmpty(pathBox.Text) == false)
-                    sw.WriteLine(pathBox.Text);
-
-                sw.Close();
                 return true;
             }
             catch(Exception ex)
@@ -449,13 +501,26 @@ namespace TableLoader
 
         private void pivotApply_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(pivotPathBox.Text) == true)
-            {
-                pivotFolderName = "Trunk";
-                pivotPathBox.Text = pivotFolderName;
-                return;
-            }
-            pivotFolderName = pivotPathBox.Text;
+			FolderBrowserDialog fb = new FolderBrowserDialog();
+			if (fb.ShowDialog() == DialogResult.OK)
+			{
+                pivotFolderName = fb.SelectedPath;
+				pivotPathBox.Text = fb.SelectedPath;
+
+				if (string.IsNullOrEmpty(pivotPathBox.Text) == true)
+				{
+					pivotFolderName = "";
+					pivotPathBox.Text = pivotFolderName;
+				}
+				// 로컬 마지막 경로 저장
+				StreamWriter sw = new StreamWriter(Directory.GetCurrentDirectory() + "\\lastConfig");
+				if (sw == null) return;
+                
+				sw.WriteLine(pivotPathBox.Text);
+				sw.Close();
+			}
+            pathBox_TextChanged(null, null);
+            fileTextBox_TextChanged(null, null);
         }
     }
 }
