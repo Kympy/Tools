@@ -160,11 +160,19 @@ namespace TableLoader
                     Log($"폴더를 찾을 수 없습니다. : \"{argPath}\"\n");
                     return;
                 }
-                if (Directory.Exists(savePathBox.Text) == false ||
-                    Directory.Exists(classPathBox.Text) == false)
+                if (string.IsNullOrEmpty(savePathBox.Text) == true ||
+                    string.IsNullOrEmpty(classPathBox.Text) == true)
                 {
-                    Log($"저장 경로가 설정되지 않았거나 폴더가 존재하지 않습니다.\nJson : \"{savePathBox.Text}\"\nClass : \"{classPathBox.Text}\"\n");
+                    Log($"저장 경로가 설정되지 않았습니다.\nJson : \"{savePathBox.Text}\"\nClass : \"{classPathBox.Text}\"\n");
                     return;
+                }
+                if (Directory.Exists(savePathBox.Text) == false)
+                {
+                    Directory.CreateDirectory(savePathBox.Text);
+                }
+                if (Directory.Exists(classPathBox.Text) == false)
+                {
+                    Directory.CreateDirectory(classPathBox.Text);
                 }
                 savePath_Json = savePathBox.Text;
                 savePath_Script = classPathBox.Text;
@@ -294,29 +302,29 @@ namespace TableLoader
                 Log("데이터 타입과 이름을 가져오는 중...\n");
                 for (int i = StartCol; i <= colCount; i++)
                 {
-                    object type = (worksheet.Cells[StartRow, i] as Range).Value2;
-                    if (type == null || type?.ToString() == " ")
+                    object name = (worksheet.Cells[StartRow, i] as Range).Value2;
+                    if (name == null || name?.ToString() == " ")
                     {
-                        types[i - StartCol] = "";
+                        names[i - StartCol] = "";
                         Log($"타입 읽기 에러 : 테이블을 확인하세요. 셀 [{StartRow},{i}]");
                     }
                     else
                     {
-					    types[i - StartCol] = type.ToString();
+                        names[i - StartCol] = name.ToString();
                     }
-                    Log($"{types[i - StartCol]} : ");
+                    Log($"{names[i - StartCol]} : ");
 
-                    object name = (worksheet.Cells[StartRow + 1, i] as Range).Value2;
-                    if (name == null || name?.ToString() == " ")
+                    object type = (worksheet.Cells[StartRow + 1, i] as Range).Value2;
+                    if (type == null || type?.ToString() == " ")
                     {
-						names[i - StartCol] = "";
+                        types[i - StartCol] = "";
 						Log($"이름 읽기 에러 : 테이블을 확인하세요. 셀 [{StartRow + 1},{i}]");
 					}
                     else
                     {
-					    names[i - StartCol] = name.ToString();
+                        types[i - StartCol] = type.ToString();
                     }
-                    Log($"{names[i - StartCol]}\n");
+                    Log($"{types[i - StartCol]}\n");
                 }
                 // Get data cells
                 Log("데이터 읽는 중...\n");
@@ -437,10 +445,10 @@ namespace TableLoader
                 targetPath = $"{savePath_Script}\\{fileName[0]}.cs";
                 writer = File.CreateText(targetPath);
         
-                writer.WriteLine("// Auto Created by Json writer program. create by DragonGate Table Loader.");
+                writer.WriteLine("// Auto created by table tool. Created by DragonGate Table Loader.");
                 writer.WriteLine();
                 writer.WriteLine("[System.Serializable]");
-                writer.WriteLine($"public class {fileName[0]} : Data");
+                writer.WriteLine($"public class {fileName[0]}Data : Data");
                 writer.WriteLine("{");
                 for (int i = 1; i < datas.GetLength(1); i++) // ID 칼럼은 스킵한다.
                 {
@@ -448,7 +456,7 @@ namespace TableLoader
                 }
                 writer.WriteLine("}");
                 writer.WriteLine("[System.Serializable]");
-                writer.WriteLine($"public class {fileName[0]}Data : TableBase<{fileName[0]}> {{ }}");
+                writer.WriteLine($"public class {fileName[0]}Table : TableBase<{fileName[0]}Data> {{ }}");
                 writer.Close();
                 Log("C# 클래스 저장 완료.\n");
 
