@@ -265,8 +265,8 @@ namespace TableLoader
                 GC.Collect();
             }
         }
-        private int StartCol = 1;
-        private int StartRow = 1;
+        private int StartCol;
+        private int StartRow;
         private bool Make(string argFilePath)
         {
             try
@@ -276,7 +276,36 @@ namespace TableLoader
                 worksheet = workbook.Worksheets.Item[1] as Worksheet;
                 //Microsoft.Office.Interop.Excel.Range range = worksheet.UsedRange;
 
-                StartRow = (worksheet.Cells[1, "A"] as Range).get_End(XlDirection.xlDown).Row;
+                StartRow = -1;
+                // "ID" 로 시작하는 칼럼을 찾아 아래로 내려가면서 행을 찾는다.
+                Range lastCell = (worksheet.Cells[1, "A"] as Range).get_End(XlDirection.xlDown).Cells;
+                for (int i = 0; i < 10; i++)
+                {
+                    // 빈 셀일 경우 다음으로
+                    if (lastCell.Value2 == null)
+                    {
+                        lastCell = lastCell.get_End(XlDirection.xlDown).Cells;
+                        continue;
+                    }
+                    // ID 가 아닐 경우 다음으로
+                    if (string.Compare(lastCell.Value2.ToString(), "ID") != 0)
+                    {
+                        lastCell = lastCell.get_End(XlDirection.xlDown).Cells;
+                        continue;
+                    }
+                    else
+                    {
+                        StartRow = lastCell.Row;
+                        break;
+                    }
+                }
+
+                if (StartRow == -1)
+                {
+                    Log("ID 칼럼을 찾을 수 없어, 시작 행을 구할 수 없습니다.");
+                    return false;
+                }
+
                 StartCol = 1;
 
                 int EndRow = (worksheet.Cells[StartRow, "A"] as Range).get_End(XlDirection.xlDown).Row;
@@ -284,11 +313,7 @@ namespace TableLoader
 
 				Log($"시작/마지막 행 : {StartRow}/{EndRow}\n");
 				Log($"시작/마지막 열 : {StartCol}/{EndCol}\n");
-				//if (range.Cells[StartRow, StartCol] == null || (range.Cells[StartRow, StartCol] as Range).Value2 == null)
-				//            {
-				//                Log("시작 셀(A3) 이 비어 있습니다.\n");
-				//                return false;
-				//            }
+
 				int rowCount = EndRow - StartRow + 1;
                 int colCount = EndCol;
 
