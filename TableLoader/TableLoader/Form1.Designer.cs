@@ -1,4 +1,6 @@
-﻿namespace TableLoader
+﻿using System.Windows.Forms;
+
+namespace TableLoader
 {
     partial class Form1
     {
@@ -38,18 +40,18 @@
 			this.GenerateFileButton = new System.Windows.Forms.Button();
 			this.fileFindButton = new System.Windows.Forms.Button();
 			this.savePathLabel = new System.Windows.Forms.Label();
-			this.savePathBox = new System.Windows.Forms.TextBox();
+			this.saveJsonPathBox = new System.Windows.Forms.TextBox();
 			this.SetSavePathButton = new System.Windows.Forms.Button();
 			this.logBox = new System.Windows.Forms.RichTextBox();
 			this.logLabel = new System.Windows.Forms.Label();
 			this.classFolderFindButton = new System.Windows.Forms.Button();
-			this.classPathBox = new System.Windows.Forms.TextBox();
+			this.saveClassPathBox = new System.Windows.Forms.TextBox();
 			this.classSavePath = new System.Windows.Forms.Label();
 			this.OpenJsonButton = new System.Windows.Forms.Button();
 			this.OpenClassButton = new System.Windows.Forms.Button();
-			this.pivotFolderLabel = new System.Windows.Forms.Label();
-			this.pivotPathBox = new System.Windows.Forms.TextBox();
-			this.pivotApply = new System.Windows.Forms.Button();
+			//this.pivotFolderLabel = new System.Windows.Forms.Label();
+			//this.pivotPathBox = new System.Windows.Forms.TextBox();
+			//this.pivotApply = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// excelPathLabel
@@ -172,14 +174,14 @@
 			// 
 			// savePathBox
 			// 
-			this.savePathBox.BackColor = System.Drawing.Color.OldLace;
-			this.savePathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.savePathBox.Location = new System.Drawing.Point(18, 267);
-			this.savePathBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.savePathBox.Multiline = true;
-			this.savePathBox.Name = "savePathBox";
-			this.savePathBox.Size = new System.Drawing.Size(360, 63);
-			this.savePathBox.TabIndex = 9;
+			this.saveJsonPathBox.BackColor = System.Drawing.Color.OldLace;
+			this.saveJsonPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.saveJsonPathBox.Location = new System.Drawing.Point(18, 267);
+			this.saveJsonPathBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.saveJsonPathBox.Multiline = true;
+			this.saveJsonPathBox.Name = "saveJsonPathBox";
+			this.saveJsonPathBox.Size = new System.Drawing.Size(360, 63);
+			this.saveJsonPathBox.TabIndex = 9;
 			// 
 			// SetSavePathButton
 			// 
@@ -238,14 +240,14 @@
 			// 
 			// classPathBox
 			// 
-			this.classPathBox.BackColor = System.Drawing.Color.LemonChiffon;
-			this.classPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.classPathBox.Location = new System.Drawing.Point(18, 370);
-			this.classPathBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.classPathBox.Multiline = true;
-			this.classPathBox.Name = "classPathBox";
-			this.classPathBox.Size = new System.Drawing.Size(360, 63);
-			this.classPathBox.TabIndex = 14;
+			this.saveClassPathBox.BackColor = System.Drawing.Color.LemonChiffon;
+			this.saveClassPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.saveClassPathBox.Location = new System.Drawing.Point(18, 370);
+			this.saveClassPathBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.saveClassPathBox.Multiline = true;
+			this.saveClassPathBox.Name = "saveClassPathBox";
+			this.saveClassPathBox.Size = new System.Drawing.Size(360, 63);
+			this.saveClassPathBox.TabIndex = 14;
 			// 
 			// classSavePath
 			// 
@@ -291,41 +293,41 @@
 			// 
 			// pivotFolderLabel
 			// 
-			this.pivotFolderLabel.AutoSize = true;
-			this.pivotFolderLabel.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.pivotFolderLabel.Location = new System.Drawing.Point(501, 409);
-			this.pivotFolderLabel.Name = "pivotFolderLabel";
-			this.pivotFolderLabel.Size = new System.Drawing.Size(105, 16);
-			this.pivotFolderLabel.TabIndex = 18;
-			this.pivotFolderLabel.Text = "커스텀 저장 폴더";
+			// this.pivotFolderLabel.AutoSize = true;
+			// this.pivotFolderLabel.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			// this.pivotFolderLabel.Location = new System.Drawing.Point(501, 409);
+			// this.pivotFolderLabel.Name = "pivotFolderLabel";
+			// this.pivotFolderLabel.Size = new System.Drawing.Size(105, 16);
+			// this.pivotFolderLabel.TabIndex = 18;
+			// this.pivotFolderLabel.Text = "커스텀 저장 폴더";
 			// 
 			// pivotPathBox
 			// 
-			this.pivotPathBox.BackColor = System.Drawing.Color.AliceBlue;
-			this.pivotPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.pivotPathBox.Location = new System.Drawing.Point(612, 406);
-			this.pivotPathBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.pivotPathBox.Name = "pivotPathBox";
-			this.pivotPathBox.ReadOnly = true;
-			this.pivotPathBox.Size = new System.Drawing.Size(236, 21);
-			this.pivotPathBox.TabIndex = 19;
-			this.pivotPathBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// this.pivotPathBox.BackColor = System.Drawing.Color.AliceBlue;
+			// this.pivotPathBox.Font = new System.Drawing.Font("Cascadia Code", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			// this.pivotPathBox.Location = new System.Drawing.Point(612, 406);
+			// this.pivotPathBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			// this.pivotPathBox.Name = "pivotPathBox";
+			// this.pivotPathBox.ReadOnly = true;
+			// this.pivotPathBox.Size = new System.Drawing.Size(236, 21);
+			// this.pivotPathBox.TabIndex = 19;
+			// this.pivotPathBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// pivotApply
 			// 
-			this.pivotApply.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
-			this.pivotApply.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
-			this.pivotApply.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
-			this.pivotApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.pivotApply.Font = new System.Drawing.Font("Cascadia Code", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.pivotApply.Location = new System.Drawing.Point(854, 403);
-			this.pivotApply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.pivotApply.Name = "pivotApply";
-			this.pivotApply.Size = new System.Drawing.Size(73, 26);
-			this.pivotApply.TabIndex = 20;
-			this.pivotApply.Text = "찾기";
-			this.pivotApply.UseVisualStyleBackColor = true;
-			this.pivotApply.Click += new System.EventHandler(this.pivotApply_Click);
+			// this.pivotApply.FlatAppearance.BorderColor = System.Drawing.Color.OliveDrab;
+			// this.pivotApply.FlatAppearance.MouseDownBackColor = System.Drawing.Color.PaleGreen;
+			// this.pivotApply.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SpringGreen;
+			// this.pivotApply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			// this.pivotApply.Font = new System.Drawing.Font("Cascadia Code", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			// this.pivotApply.Location = new System.Drawing.Point(854, 403);
+			// this.pivotApply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			// this.pivotApply.Name = "pivotApply";
+			// this.pivotApply.Size = new System.Drawing.Size(73, 26);
+			// this.pivotApply.TabIndex = 20;
+			// this.pivotApply.Text = "찾기";
+			// this.pivotApply.UseVisualStyleBackColor = true;
+			// this.pivotApply.Click += new System.EventHandler(this.pivotApply_Click);
 			// 
 			// Form1
 			// 
@@ -333,18 +335,18 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(947, 449);
-			this.Controls.Add(this.pivotApply);
-			this.Controls.Add(this.pivotPathBox);
-			this.Controls.Add(this.pivotFolderLabel);
+			// this.Controls.Add(this.pivotApply);
+			// this.Controls.Add(this.pivotPathBox);
+			// this.Controls.Add(this.pivotFolderLabel);
 			this.Controls.Add(this.OpenClassButton);
 			this.Controls.Add(this.OpenJsonButton);
 			this.Controls.Add(this.classFolderFindButton);
-			this.Controls.Add(this.classPathBox);
+			this.Controls.Add(this.saveClassPathBox);
 			this.Controls.Add(this.classSavePath);
 			this.Controls.Add(this.logLabel);
 			this.Controls.Add(this.logBox);
 			this.Controls.Add(this.SetSavePathButton);
-			this.Controls.Add(this.savePathBox);
+			this.Controls.Add(this.saveJsonPathBox);
 			this.Controls.Add(this.savePathLabel);
 			this.Controls.Add(this.GenerateFileButton);
 			this.Controls.Add(this.fileFindButton);
@@ -361,6 +363,7 @@
 			this.Name = "Form1";
 			this.Text = "Table Generator v1.0 DragonGate";
 			this.Load += new System.EventHandler(this.Form1_Load);
+			this.FormClosing += Form1_FormClosing;
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -377,18 +380,18 @@
         private System.Windows.Forms.Button GenerateFileButton;
         private System.Windows.Forms.Button fileFindButton;
         private System.Windows.Forms.Label savePathLabel;
-        private System.Windows.Forms.TextBox savePathBox;
+        private System.Windows.Forms.TextBox saveJsonPathBox;
         private System.Windows.Forms.Button SetSavePathButton;
         private System.Windows.Forms.RichTextBox logBox;
         private System.Windows.Forms.Label logLabel;
         private System.Windows.Forms.Button classFolderFindButton;
-        private System.Windows.Forms.TextBox classPathBox;
+        private System.Windows.Forms.TextBox saveClassPathBox;
         private System.Windows.Forms.Label classSavePath;
         private System.Windows.Forms.Button OpenJsonButton;
         private System.Windows.Forms.Button OpenClassButton;
-        private System.Windows.Forms.Label pivotFolderLabel;
-        private System.Windows.Forms.TextBox pivotPathBox;
-        private System.Windows.Forms.Button pivotApply;
+        //private System.Windows.Forms.Label pivotFolderLabel;
+        //private System.Windows.Forms.TextBox pivotPathBox;
+        //private System.Windows.Forms.Button pivotApply;
     }
 }
 
